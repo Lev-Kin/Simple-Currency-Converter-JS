@@ -1,5 +1,5 @@
-const input = require('sync-input');
 
+const input = require('sync-input');
 const currencies = {
     USD: 1,
     JPY: 113.5,
@@ -15,29 +15,54 @@ console.log("1 USD equals 0.89 EUR");
 console.log("1 USD equals 74.36 RUB");
 console.log("1 USD equals 0.75 GBP");
 
-console.log("What do you want to convert?");
-let fromCurrency = input("From: ").toUpperCase();
+while (true) {
+    console.log("What do you want to do?");
+    console.log("1-Convert currencies 2-Exit program");
+    let choice = input("> ");
 
-if (!(fromCurrency in currencies)) {
-    console.log("Unknown currency");
-} else {
-    console.log("To: ");
-    let toCurrency = input("To: ").toUpperCase();
+    if (choice === "1") {
+        while (true) {
+            console.log("What do you want to convert?");
+            let fromCurrency = input("From: ").toUpperCase();
 
-    if (!(toCurrency in currencies)) {
-        console.log("Unknown currency");
-    } else {
-        console.log("Amount: ");
-        let amount = input("Amount: ");
+            if (!(fromCurrency in currencies)) {
+                console.log("Unknown currency");
+                continue;
+            }
 
-        if (isNaN(Number(amount))) {
-            console.log("The amount has to be a number");
-        } else if (Number(amount) < 1) {
-            console.log("The amount cannot be less than 1");
-        } else {
-            let result = (Number(amount) * currencies[toCurrency]) / currencies[fromCurrency];
-            console.log(`Result: ${amount} ${fromCurrency} equals ${result.toFixed(4)} ${toCurrency}`);
+            console.log("To: ");
+            let toCurrency = input("To: ").toUpperCase();
+
+            if (!(toCurrency in currencies)) {
+                console.log("Unknown currency");
+                continue;
+            }
+
+            console.log("Amount: ");
+            let amount = input("Amount: ");
+
+            if (isNaN(Number(amount))) {
+                console.log("The amount has to be a number");
+                continue;
+            } else if (Number(amount) < 1) {
+                console.log("The amount cannot be less than 1");
+                continue;
+            }
+
+            let result =
+                (Number(amount) * currencies[toCurrency]) / currencies[fromCurrency];
+            console.log(
+                `Result: ${amount} ${fromCurrency} equals ${result.toFixed(
+                    4
+                )} ${toCurrency}`
+            );
+
+            break;
         }
+    } else if (choice === "2") {
+        console.log("Have a nice day!");
+        break;
+    } else {
+        console.log("Unknown input");
     }
 }
-
